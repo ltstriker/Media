@@ -9,6 +9,7 @@ using Windows.Media;
 using Windows.Media.Core;
 using Windows.Media.Playback;
 using Windows.Storage;
+using Windows.Storage.FileProperties;
 using Windows.Storage.Pickers;
 using Windows.UI;
 using Windows.UI.ViewManagement;
@@ -98,6 +99,11 @@ namespace Media2
                     if (file.FileType == ".mp3")
                     {
                         //_mediaElement.PosterSource = new BitmapImage(new Uri("ms-appx:///Assets/menkey.jpg"));
+                        StorageItemThumbnail thumbnail = await file.GetThumbnailAsync(ThumbnailMode.MusicView, 500, ThumbnailOptions.ResizeThumbnail);
+                        BitmapImage bitmap = new BitmapImage();
+                        bitmap.SetSource(thumbnail);
+                        picture.ImageSource = bitmap;
+                        EllStoryboard.Begin();
                         ellipse.Visibility = Visibility.Visible;
                     }
                     else
